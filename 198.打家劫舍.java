@@ -1,3 +1,5 @@
+import java.util.Map;
+
 /*
  * @lc app=leetcode.cn id=198 lang=java
  *
@@ -33,8 +35,37 @@
  * 
  */
 class Solution {
+    private int[] _nums;
+
+    private Map<Integer, Integer> resultMap = new HashMap<>();
+
     public int rob(int[] nums) {
-        
+        if (nums.length == 0) {
+            return 0;
+        }
+        _nums = nums;
+
+        return cal(_nums.length - 1);
+    }
+
+    private int cal(int i) {
+        if (i == 0) {
+            return _nums[0];
+        }
+
+        if (i == 1) {
+            return Math.max(_nums[0], _nums[1]);
+        }
+
+        int tempMax;
+        if (resultMap.containsKey(i)) {
+            return resultMap.get(i);
+        } else {
+            tempMax = Math.max(cal(i - 1), cal(i - 2) + _nums[i]);
+            resultMap.put(i, tempMax);
+        }
+
+        return tempMax;
     }
 }
 

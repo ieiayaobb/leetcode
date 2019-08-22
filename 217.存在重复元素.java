@@ -1,3 +1,5 @@
+import java.util.Set;
+
 /*
  * @lc app=leetcode.cn id=217 lang=java
  *
@@ -33,25 +35,11 @@
  */
 class Solution {
     public boolean containsDuplicate(int[] nums) {
-        long value = 1l;
-        int oneCount = 0;
-        int zeroCount = 0;
-        for (long num : nums) {
-            if (num == 0) {
-                zeroCount ++;
-            } else if (num == 1) {
-                oneCount ++;
-            } else if (value % num != 0) {
-                value *= (long)num;
-            } else if(oneCount < 1) {
-                return true;
-            }
-
-            if (oneCount > 1 || zeroCount > 1) {
-                return true;
-            }
+        Set<Integer> numSet = new HashSet();
+        for (int num : nums) {
+            numSet.add(num);
         }
-        return false;
+        return numSet.size() != nums.length;
     }
 }
 

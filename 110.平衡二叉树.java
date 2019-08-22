@@ -15,40 +15,36 @@ import java.util.List;
  * }
  */
 class Solution {
-    private List<Integer> heights = new ArrayList<>();
+    
     public boolean isBalanced(TreeNode root) {
         if (root == null) {
             return true;
         }
 
-        if (root.left == null || root.right == null) {
-            return true;
-        }
-        check(root, 0);
+        check(root);
 
-        for (int i = 1 ; i < heights.size(); i ++) {
-            if (heights.get(i - 1) - heights.get(i) > 1 || heights.get(i - 1) - heights.get(i) < -1) {
-                return false;
-            }
-        }
-
-        return true;
+        return flag;
     }
 
-    private void check(TreeNode node, int height) {
-        height++;
-        //System.out.println(node.val + " : " + height);
-        
+    private Boolean flag = true;
+
+    private int check(TreeNode node) {
+        int leftH = 1;
+        int rightH = 1;
         if (node.left != null) {
-            check(node.left, height);
+            leftH = check(node.left);
         }
         if (node.right != null) {
-            check(node.right, height);
+            rightH = check(node.right);
         }
-        if (node.left == null || node.right == null) {
-            heights.add(height);
-            System.out.println(height);
+
+        System.out.println("leftH: " + leftH + ", rightH:" + rightH);
+
+        if (Math.abs(leftH - rightH) > 1) {
+            flag = false;
         }
+
+        return Math.max(leftH, rightH) + 1;
     }
 }
 

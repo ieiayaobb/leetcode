@@ -11,43 +11,24 @@ class Solution {
             return -1;
         }
         Set exist = new HashSet<>();
-        if (s.length() == 1) {
-            return 0;
-        }
-        int max = 0;
-        int i;
-        for(i = 0; i < s.length(); i++){
-            char c1 = s.charAt(i);
-            if (exist.contains(c1)) {
-                max ++;
-                continue;
-            }
-            System.out.println(c1);
-            int j;
-            for(j = i + 1; j < s.length(); j++){
-                char c2 = s.charAt(j);
-                if (c1 == c2) {
-                    exist.add(c1);
-                    max ++;
-                    break;
+        Set left = new HashSet<>();
+        char[] cs = s.toCharArray();
+        for (int i = 0; i < cs.length; i ++) {
+            char ele = cs[i];
+            if (left.contains(ele)) {
+                left.remove(ele);
+            } else {
+                if (!exist.contains(ele)) {
+                    exist.add(ele);
+                    left.add(ele);
                 }
             }
-            System.out.println(j);
-            if (j == s.length()) {
-                if (max == s.length() - 1) {
-                    return -1;
-                }
-                return max;
+        }
+        for (int j = 0; j < cs.length; j ++) {
+            if (left.contains(cs[j])) {
+                return j;
             }
         }
-
-        System.out.println(i);
-        if (i == s.length()) {
-            if (!exist.contains(s.charAt(i - 1))) {
-                return i;
-            }
-        }
-
         return -1;
     }
 }
